@@ -1,6 +1,6 @@
 import os
 #@markdown https://platform.openai.com/account/api-keys
-OPENAI_API_KEY = "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" #@param {type:"string"}
+OPENAI_API_KEY = "" #@param {type:"string"}
 
 #@markdown https://huggingface.co/settings/tokens
 #@markdown HuggingFace에서 모델 다운로드나 클라우드 모델 사용하기 위해서 필요 (무료)
