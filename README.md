@@ -24,10 +24,6 @@
 
 
 
-
-
-
-
 **gRPC 서버 시작**
 1. 도커 시작
 2. cd /root/aifred/src
