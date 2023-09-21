@@ -2,6 +2,31 @@
 
 
 ## gRPC 관련
+### Protocol Buffers(protobuf) 파일, 파이썬용 코드로 컴파일<br>
+
+**python -m grpc_tools.protoc -I../protos --python_out=. --pyi_out=. --grpc_python_out=. ../protos/ask.proto**
+>샘플 : python -m grpc_tools.protoc -I../protos --python_out=. --pyi_out=. --grpc_python_out=. ../protos/ask.proto
+
+**옵션설명**
+1. **`python -m grpc_tools.protoc`**:
+   - Python 모듈로서 `grpc_tools.protoc`를 실행합니다. `grpc_tools.protoc`는 gRPC 플러그인을 포함한 Protocol Buffers 컴파일러입니다.
+2. **`-I../../protos`**:
+   - `protoc`에게 `.proto` 파일의 임포트 경로를 알려줍니다. 여기서는 `../../protos` 디렉토리를 임포트 경로로 사용하고 있습니다.
+3. **`--python_out=.`**:
+   - 컴파일된 Python 코드의 출력 위치를 지정합니다. 여기서는 현재 디렉토리(`.`)를 지정하였습니다.
+4. **`--pyi_out=.`**:
+   - 컴파일된 Python 타입 힌트 (`.pyi` 파일)의 출력 위치를 지정합니다. 여기서도 현재 디렉토리(`.`)를 지정하였습니다.
+5. **`--grpc_python_out=.`**:
+   - gRPC 플러그인을 사용하여 컴파일된 gRPC Python 코드의 출력 위치를 지정합니다. 마찬가지로 현재 디렉토리(`.`)를 지정하였습니다.
+6. **`../../protos/helloworld.proto`**:
+   - 컴파일하려는 Protocol Buffers 파일의 경로입니다.
+
+
+
+
+
+
+
 
 **gRPC 서버 시작**
 1. 도커 시작
