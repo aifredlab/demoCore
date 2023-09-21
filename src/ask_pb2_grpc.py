@@ -41,20 +41,19 @@ class AskerServicer(object):
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
-        print("request: ", request)
-        raise NotImplementedError('Method not implemented!11111')
+        raise NotImplementedError('Method not implemented!')
 
     def AskStreamReply(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!22222')
+        raise NotImplementedError('Method not implemented!')
 
     def AskBidiStream(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!33333')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_AskerServicer_to_server(servicer, server):
