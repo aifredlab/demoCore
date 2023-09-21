@@ -1,3 +1,4 @@
+import json
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import (
     ChatPromptTemplate,
@@ -32,4 +33,6 @@ def main(prompt):
         prompt=chat_prompt
     )
 
-    return chain.run(text=prompt)
+    result = json.loads(chain.run(text=prompt))
+
+    return result
