@@ -34,6 +34,8 @@ service Asker {
 // The request message containing the user's name.
 message AskRequest {
   string question = 1;
+  string companyCode = 2;
+  string productCode = 3;
 }
 
 // The response message containing the greetings
