@@ -5,10 +5,14 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class AskRequest(_message.Message):
-    __slots__ = ["question"]
+    __slots__ = ["question", "companyCode", "productCode"]
     QUESTION_FIELD_NUMBER: _ClassVar[int]
+    COMPANYCODE_FIELD_NUMBER: _ClassVar[int]
+    PRODUCTCODE_FIELD_NUMBER: _ClassVar[int]
     question: str
-    def __init__(self, question: _Optional[str] = ...) -> None: ...
+    companyCode: str
+    productCode: str
+    def __init__(self, question: _Optional[str] = ..., companyCode: _Optional[str] = ..., productCode: _Optional[str] = ...) -> None: ...
 
 class AskReply(_message.Message):
     __slots__ = ["content", "answer"]
