@@ -19,8 +19,10 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACEHUB_API_TOKEN
 os.environ["SERPAPI_API_KEY"] = SERPAPI_API_KEY
 
 if MODEL_NAME == "GPT":
-    from opengpt import classfication as cf
-    from vectordb import similarity as sm
+    from opengpt import classfication as cf     # 카테고리 리턴
+    from vectordb import similarity as sm       # Document 리턴
+    from opengpt import combine_documents_stuff as cd       # chat 리턴
+    
 else:
     print("후추 구현")
 
@@ -32,7 +34,7 @@ class Aifred:
     def process(self):
         prompt = self.prompt
         result = "test"
-        
+
         cfResult = cf.main(prompt);
         print(f"cfResult {cfResult}")
 
