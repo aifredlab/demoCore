@@ -78,6 +78,7 @@ python greeter_server.py
 
 - docker run -d passion1014/python-grpc-server:latest
 - docker run -p 50051:50051 -v /Users/passion1014/project/grpc/aifred:/root/aifred -it passion1014/python-grpc-server:latest /bin/bash
+- docker run -p 19530:19530 -it milvusdb/milvus:latest /bin/bash
 
 ### container 실행
 
@@ -93,3 +94,13 @@ docker commit [변경된_컨테이너_이름_또는_ID] [새로운_이미지_이
 
 pip install langchain
 pip install openai
+pip install pymilvus
+pip install pypdf
+pip install tiktoken
+
+## Install Milvus Standalone with Docker
+
+https://milvus.io/docs/install_standalone-docker.md
+
+wget https://github.com/milvus-io/milvus/releases/download/v2.3.1/milvus-standalone-docker-compose.yml -O docker-compose.yml
+sudo docker compose up -d
