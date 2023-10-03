@@ -2,7 +2,7 @@ import os
 import json
 
 #@markdown https://platform.openai.com/account/api-keys
-OPENAI_API_KEY = "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" #@param {type:"string"}
+OPENAI_API_KEY = "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" #@param {type:"string"}
 
 #@markdown https://huggingface.co/settings/tokens
 #@markdown HuggingFace에서 모델 다운로드나 클라우드 모델 사용하기 위해서 필요 (무료)
@@ -44,7 +44,7 @@ class Aifred:
             print("보험료계산로직.......")
         elif category == "약관조회":
             print("약관조회로직.......")
-            smReulst = sm.main(prompt)
+            smReulst = sm.search(prompt)
             print(f"smReulst {smReulst}")
         else:
             print("ERRORERRORERRORERRORERRORERROR")
@@ -53,7 +53,7 @@ class Aifred:
 
 if __name__ == "__main__":
     #process()
-    aifred_instance = Aifred("보험료계산을 해주세요")  # Aifred 클래스의 인스턴스 생성
+    aifred_instance = Aifred("약관조회 해약환급금 에 관한 사항")  # Aifred 클래스의 인스턴스 생성
     aifred_instance.process()  # process 메서드 호출
     
 
