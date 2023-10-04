@@ -1,13 +1,13 @@
 
-from pymilvus import Milvus
+from pymilvus import MilvusClient
 
-ZILLIZ_CLOUD_URI = "grpc://passion1014:Eksldpf79!2@in03-bfa4469b6404aa3.api.gcp-us-west1.zillizcloud.com:19536"  # example: "https://in01-17f69c292d4a5sa.aws-us-west-2.vectordb.zillizcloud.com:19536"
+ZILLIZ_CLOUD_URI = "https://in03-bfa4469b6404aa3.api.gcp-us-west1.zillizcloud.com"  # example: "https://in01-17f69c292d4a5sa.aws-us-west-2.vectordb.zillizcloud.com:19536"
 ZILLIZ_CLOUD_USERNAME = ""  # example: "username"
 ZILLIZ_CLOUD_PASSWORD = ""  # example: "*********"
 ZILLIZ_CLOUD_API_KEY = "a3d25208a17af9679b40440b61aeee5c9ad11db43e49d21761f65c5034d2637dda67a4ddf1833bba3ea2c68900c2d169b34e2a8f"  # example: "*********" (for serverless clusters which can be used as replacements for user and password)
 
 # Milvus 서버에 연결
-client = Milvus(
+client = MilvusClient(
             uri=ZILLIZ_CLOUD_URI,
             token=ZILLIZ_CLOUD_API_KEY
         )
@@ -19,7 +19,7 @@ client = Milvus(
 collection_name = 'LangChainCollection'
 
 # 컬렉션의 스키마 조회
-status, schema = client.get_collection_info(collection_name)
+status, schema = client.get_collection_stats(collection_name)
 
 # 결과 확인 및 벡터 필드의 차원 출력
 if status.OK():
