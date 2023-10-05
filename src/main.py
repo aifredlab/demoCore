@@ -1,22 +1,9 @@
 import os
 import json
+from dotenv import load_dotenv
 
-#@markdown https://platform.openai.com/account/api-keys
-OPENAI_API_KEY = "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" #@param {type:"string"}
 
-#@markdown https://huggingface.co/settings/tokens
-#@markdown HuggingFace에서 모델 다운로드나 클라우드 모델 사용하기 위해서 필요 (무료)
-HUGGINGFACEHUB_API_TOKEN = "" #@param {type:"string"}
-
-#@markdown https://serpapi.com/manage-api-key
-#@markdown 구글 검색하기 위해서 필요 (월 100회 무료)
-SERPAPI_API_KEY = "" #@param {type:"string"}
-
-MODEL_NAME = "GPT" #@param {type:"string"}
-
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACEHUB_API_TOKEN
-os.environ["SERPAPI_API_KEY"] = SERPAPI_API_KEY
+MODEL_NAME="GPT"
 
 if MODEL_NAME == "GPT":
     from opengpt import classfication as cf     # 카테고리 리턴
@@ -26,13 +13,16 @@ if MODEL_NAME == "GPT":
 else:
     print("후추 구현")
 
+
 ##################################################
 class Aifred:
-    def __init__(self, value):
-        self.prompt = value
+    def __init__(self):
+        # 환경변수 로드 (.env 파일 로드)
+        load_dotenv()
+        # print (os.environ.get('DATABASE_URL'))
 
-    def process(self):
-        prompt = self.prompt
+
+    def process(self, prompt):
         result = "test"
 
         cfResult = cf.main(prompt);
@@ -52,10 +42,7 @@ class Aifred:
         return result;
 
 if __name__ == "__main__":
-    #process()
-    aifred_instance = Aifred("약관조회 해약환급금 에 관한 사항")  # Aifred 클래스의 인스턴스 생성
-    aifred_instance.process()  # process 메서드 호출
+    aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
+    aifred_instance.process("약관조회 해약환급금 에 관한 사항")  # process 메서드 호출
     
-
-
 

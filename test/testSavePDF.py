@@ -1,10 +1,7 @@
-import os
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Milvus
 from langchain.document_loaders import PyPDFLoader
-
-os.environ["OPENAI_API_KEY"] = "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"
 
 loader = PyPDFLoader("opengpt/test.pdf")
 documents = loader.load_and_split()
