@@ -4,15 +4,10 @@ import random
 import json
 
 
-ZILLIZ_CLOUD_URI = "https://in03-bfa4469b6404aa3.api.gcp-us-west1.zillizcloud.com"  # example: "https://in01-17f69c292d4a5sa.aws-us-west-2.vectordb.zillizcloud.com:19536"
-ZILLIZ_CLOUD_USERNAME = ""  # example: "username"
-ZILLIZ_CLOUD_PASSWORD = ""  # example: "*********"
-ZILLIZ_CLOUD_API_KEY = "a3d25208a17af9679b40440b61aeee5c9ad11db43e49d21761f65c5034d2637dda67a4ddf1833bba3ea2c68900c2d169b34e2a8f"  # example: "*********" (for serverless clusters which can be used as replacements for user and password)
-
 # Milvus 서버에 연결
 client = MilvusClient(
-            uri=ZILLIZ_CLOUD_URI,
-            token=ZILLIZ_CLOUD_API_KEY
+            uri=os.environ.get('ZILLIZ_CLOUD_URI'),
+            token=os.environ.get('ZILLIZ_CLOUD_API_KEY')
         )
 
 # 검색할 컬렉션 이름
