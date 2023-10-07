@@ -2,7 +2,11 @@
 from pymilvus import Milvus, MilvusClient
 import random
 import json
+from dotenv import load_dotenv
+import os
 
+# 환경변수 셋팅
+load_dotenv(dotenv_path='../src/.env')
 
 # Milvus 서버에 연결
 client = MilvusClient(
@@ -12,7 +16,6 @@ client = MilvusClient(
 
 # 검색할 컬렉션 이름
 # collection_name = 'LangChainCollection'
-
 
 # ---------------------------------------------
 # list_collections 테스트
