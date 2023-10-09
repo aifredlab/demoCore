@@ -20,7 +20,7 @@ def main(prompt):
         '약관조회'
         '기타'
         3. 아래 json 양식으로 출력
-        {category : ''}
+        {"category" : ""}
     """
     #system_message_prompt = SystemMessagePromptTemplate.from_template(template)
 
@@ -32,7 +32,8 @@ def main(prompt):
         llm=ChatOpenAI(),
         prompt=chat_prompt
     )
-
-    result = json.loads(chain.run(text=prompt))
+    jsonStr = chain.run(text=prompt)
+    print(jsonStr)
+    result = json.loads(jsonStr)
 
     return result
