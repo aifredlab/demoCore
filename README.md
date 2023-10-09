@@ -39,8 +39,8 @@ https://www.docker.com/ - 다운로드
 https://hub.docker.com/repositories/passion1014
 
 **[3] 도커 이미지 실행**<br>
-docker run -p 50051:50051 -v /Users/passion1014/project/grpc/aifred:/root/aifred -it passion1014/python-grpc-server:latest /bin/bash<br>
-
+docker run -p 50051:50051 -v /Users/lsj/demoCore:/root/aifred -it passion1014/python-grpc-server:latest /bin/bash<br>
+/Users/lsj/demoCore
 **[4] 도커 터미널 실행**<br>
 docker exec -it [컨테이너_이름_또는_ID] /bin/bash<br>
 cd root/grpc/examples/python/helloworld/<br>

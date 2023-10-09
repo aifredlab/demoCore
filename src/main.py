@@ -2,14 +2,13 @@ import os
 import json
 from dotenv import load_dotenv
 
-
 MODEL_NAME="GPT"
 
 if MODEL_NAME == "GPT":
     from opengpt import classfication as cf     # 카테고리 리턴
     from vectordb import similarity as sm       # Document 리턴
-    from opengpt import combine_documents_stuff as cd       # chat 리턴
-    
+#    from opengpt import combine_documents_stuff as cd       # chat 리턴
+    from opengpt import chat as cd              # 카테고리 리턴
 else:
     print("후추 구현")
 
@@ -19,8 +18,6 @@ class Aifred:
     def __init__(self):
         # 환경변수 로드 (.env 파일 로드)
         load_dotenv()
-        # print (os.environ.get('DATABASE_URL'))
-
 
     def process(self, prompt):
         result = "test"
@@ -36,6 +33,9 @@ class Aifred:
             print("약관조회로직.......")
             smReulst = sm.search(prompt)
             print(f"smReulst {smReulst}")
+            cdReulst = cd.main(smReulst, prompt)
+            #print(f"cdReulst {cdReulst}")
+
         else:
             print("ERRORERRORERRORERRORERRORERROR")
     
@@ -43,6 +43,6 @@ class Aifred:
 
 if __name__ == "__main__":
     aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
-    aifred_instance.process("약관조회 해약환급금 에 관한 사항")  # process 메서드 호출
+    aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
     
 
