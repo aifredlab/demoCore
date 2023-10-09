@@ -5,9 +5,15 @@ import grpc
 import ask_pb2 
 import ask_pb2_grpc
 
+from main import Aifred
+
 class Asker(ask_pb2_grpc.AskerServicer):
     def Ask(self, request, context):
-        return ask_pb2.AskReply(content="당신의 질문은 [%s]" % request.question)
+        result = Aifred.process(request.question)
+        #aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
+        #aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
+        print("### GRPC Return Data : {result}")
+        return ask_pb2.AskReply(content="당신의 질문은 [{result}]")
 
 def serve():
     port = "50051"

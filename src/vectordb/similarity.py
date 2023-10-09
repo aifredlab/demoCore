@@ -15,7 +15,7 @@ def search(prompt):
     res = client.search(
         collection_name=os.environ.get('COLLECTION_NAME'),
         data=[ vector_data ],
-        limit=5,
+        limit=1,
         output_fields=["text"]
     )
     print(f"# collection search = {res}")
