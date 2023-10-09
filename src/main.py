@@ -41,8 +41,8 @@ class Aifred:
     
         return result;
 
-if __name__ == "__main__":
-    aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
-    aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
+#if __name__ == "__main__":
+    #aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
+    #aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
     
 
