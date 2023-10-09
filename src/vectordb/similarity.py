@@ -21,7 +21,16 @@ def search(prompt):
     print(f"# collection search = {res}")
     print("------------------------------------------\n\n")
     
-    return res;
+    return post_process( res );
+
+
+def post_process(vectortext) :
+    textarr = [obj['entity']['text'] for obj in vectortext[0]]
+    fulltext = " ".join(textarr)
+    fulltext = fulltext.replace("\n", "")
+
+    print(fulltext) 
+    return fulltext
 
 # test
 # print(  search("계약자가  회사에  보험수익자가  변경되었음을  통지하기  전에") )
