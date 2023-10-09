@@ -20,7 +20,7 @@ class Aifred:
         load_dotenv()
 
     def process(self, prompt):
-        result = "test"
+        result = "empty"
 
         cfResult = cf.main(prompt);
         print(f"cfResult {cfResult}")
@@ -29,20 +29,21 @@ class Aifred:
 
         if category == "보험료계산":
             print("보험료계산로직.......")
+            result = category
         elif category == "약관조회":
             print("약관조회로직.......")
-            smReulst = sm.search(prompt)
-            print(f"smReulst {smReulst}")
-            cdReulst = cd.main(smReulst, prompt)
-            #print(f"cdReulst {cdReulst}")
-
+            smResult = sm.search(prompt)
+            print(f"smReulst {smResult}")
+            cdResult = cd.main(smResult, prompt)
+            #print(f"cdReulst {cdResult}")
+            result = cdResult
         else:
             print("ERRORERRORERRORERRORERRORERROR")
     
         return result;
 
-#if __name__ == "__main__":
-    #aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
-    #aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
+if __name__ == "__main__":
+    aifred_instance = Aifred()  # Aifred 클래스의 인스턴스 생성
+    aifred_instance.process("이 상품을 가입해서 만기가 되면 보험료 전액 환급이 가능해?")  # process 메서드 호출
     
 
