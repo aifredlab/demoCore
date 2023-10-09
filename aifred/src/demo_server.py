@@ -7,6 +7,8 @@ import ask_pb2_grpc
 
 class Asker(ask_pb2_grpc.AskerServicer):
     def Ask(self, request, context):
+
+        
         return ask_pb2.AskReply(content="당신의 질문은 [%s]" % request.question)
 
 def serve():
