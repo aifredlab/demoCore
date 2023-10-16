@@ -34,6 +34,7 @@ class Aifred:
             print("약관조회로직.......")
             smResult = sm.search(prompt)
             print(f"smReulst {smResult}")
+
             cdResult = cd.main(smResult, prompt)
             #print(f"cdReulst {cdResult}")
             result = cdResult
