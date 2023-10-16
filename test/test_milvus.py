@@ -24,7 +24,6 @@ listCollection = client.list_collections()
 print(f"# list_collections = {listCollection}")
 print("------------------------------------------\n\n")
 
-
 for each in listCollection:
     collection_name = each
 
