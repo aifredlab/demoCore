@@ -27,15 +27,20 @@ class Aifred:
 
         category = cfResult["category"]
 
+        # 약관용으로 데모버전을 만들어서 하드코딩함
+        category = "약관조회"
+
         if category == "보험료계산":
             print("보험료계산로직.......")
             result = category
         elif category == "약관조회":
             print("약관조회로직.......")
+
+            # 약관 조회 
             smResult = sm.search(prompt)
-            print(f"smReulst {smResult}")
+            
+            # LLM 호출
             cdResult = cd.main(smResult, prompt)
-            #print(f"cdReulst {cdResult}")
             result = cdResult
         else:
             print("ERRORERRORERRORERRORERRORERROR")

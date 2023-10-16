@@ -14,8 +14,13 @@ def main(doc, prompt):
     sys = SystemMessage(content=sysMsg)
     msg = HumanMessage(content=prompt)
 
+    answer = ""
+    chat_result = chat([sys, msg])
+    if chat_result is not None:
+        answer = chat_result.content
+
     result = {}
     result["content"] = contentMsg
-    result["answer"] = chat([sys, msg])
+    result["answer"] = answer
 
     return result
