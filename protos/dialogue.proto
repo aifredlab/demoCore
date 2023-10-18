@@ -1,0 +1,68 @@
+
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true; // 파일 분리 생성 여부
+option java_package = "io.grpc.demo.ask"; // java package name
+option java_outer_classname = "DialogistProto"; // java outer class name
+option objc_class_prefix = "DIALOG"; // objective c prefix
+
+package demo;
+
+service Communicator {
+    rpc ask (Conversation) returns (Conversation) {}
+
+    rpc askStreamReply (Conversation) returns (stream Conversation) {}
+
+    rpc askBidiStream (stream Conversation) returns (stream Conversation) {}
+}
+
+// 약관등 참고 내용
+message Content {
+    string id = 1;
+    string content = 2; // 내용
+    string time = 3; // yyyyMMddHHmmss format
+}
+
+// 메세지 내용
+message Message {
+    string id = 4;
+    string text = 5; // 내용
+    string direction = 6; // 방향
+    string time = 7; // yyyyMMddHHmmss format
+}
+
+// 대화 정보
+message Conversation {
+    string id = 8; // conversation id
+    Message message = 9;
+    repeated Content content = 10; // 약관등 조회한 내용
+    repeated Message messageHistory = 11;
+}
+
+/*
+Conversation
+    - id
+    - content : list
+        - id
+        - content
+        - time
+    - messages : list
+        - id
+        - text
+        - direction
+        - time
+*/
