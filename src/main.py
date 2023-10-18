@@ -38,8 +38,8 @@ class Aifred:
 
             # 약관 조회 
             smResult = sm.search(prompt)
+
             # LLM 호출
-            
             cdResult = cd.main(smResult, prompt)
             result = cdResult
         else:
