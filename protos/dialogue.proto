@@ -23,6 +23,8 @@ option objc_class_prefix = "DIALOG"; // objective c prefix
 package demo;
 
 service Communicator {
+    rpc searchContent (Message) returns (Content) {}
+
     rpc ask (Conversation) returns (Conversation) {}
 
     rpc askStreamReply (Conversation) returns (stream Conversation) {}
@@ -41,7 +43,7 @@ message Content {
 message Message {
     string id = 4;
     string text = 5; // 내용
-    string direction = 6; // 방향
+    string type = 6; // 메세지 구분 
     string time = 7; // yyyyMMddHHmmss format
 }
 
@@ -63,6 +65,13 @@ Conversation
     - messages : list
         - id
         - text
-        - direction
+        - type
         - time
+
+------------------------------
+
+1) call searchContent = 질문에 해당하는 컨텐츠(약관등) 조회
+2) call askStreamReply = 1번 호출결과를 셋팅하여 질문 전송
+
+
 */
