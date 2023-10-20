@@ -36,7 +36,6 @@ def post_process(vectortext) :
     # http 주소 삭제
     fulltext = remove_http_urls(fulltext)
     
-    print(fulltext) 
     return fulltext
 
 def remove_http_urls(text):

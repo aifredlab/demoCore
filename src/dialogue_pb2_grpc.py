@@ -14,6 +14,11 @@ class CommunicatorStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.searchContent = channel.unary_unary(
+                '/demo.Communicator/searchContent',
+                request_serializer=dialogue__pb2.Message.SerializeToString,
+                response_deserializer=dialogue__pb2.Content.FromString,
+                )
         self.ask = channel.unary_unary(
                 '/demo.Communicator/ask',
                 request_serializer=dialogue__pb2.Conversation.SerializeToString,
@@ -33,6 +38,12 @@ class CommunicatorStub(object):
 
 class CommunicatorServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def searchContent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def ask(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -55,6 +66,11 @@ class CommunicatorServicer(object):
 
 def add_CommunicatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'searchContent': grpc.unary_unary_rpc_method_handler(
+                    servicer.searchContent,
+                    request_deserializer=dialogue__pb2.Message.FromString,
+                    response_serializer=dialogue__pb2.Content.SerializeToString,
+            ),
             'ask': grpc.unary_unary_rpc_method_handler(
                     servicer.ask,
                     request_deserializer=dialogue__pb2.Conversation.FromString,
@@ -79,6 +95,23 @@ def add_CommunicatorServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class Communicator(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def searchContent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/demo.Communicator/searchContent',
+            dialogue__pb2.Message.SerializeToString,
+            dialogue__pb2.Content.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ask(request,
