@@ -27,7 +27,7 @@ service Communicator {
 
     rpc ask (Conversation) returns (Conversation) {}
 
-    rpc askStreamReply (Conversation) returns (stream Conversation) {}
+    rpc askStreamReply (Conversation) returns (stream Message) {}
 
     rpc askBidiStream (stream Conversation) returns (stream Conversation) {}
 }
@@ -43,7 +43,7 @@ message Content {
 message Message {
     string id = 4;
     string text = 5; // 내용
-    string type = 6; // 메세지 구분 
+    string type = 6; // 메세지 구분 (1: 사용자의 질문, ) 
     string time = 7; // yyyyMMddHHmmss format
 }
 

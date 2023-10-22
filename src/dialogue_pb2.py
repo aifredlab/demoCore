@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x64ialogue.proto\x12\x04\x64\x65mo\"4\n\x07\x43ontent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"?\n\x07Message\x12\n\n\x02id\x18\x04 \x01(\t\x12\x0c\n\x04text\x18\x05 \x01(\t\x12\x0c\n\x04type\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\t\"\x81\x01\n\x0c\x43onversation\x12\n\n\x02id\x18\x08 \x01(\t\x12\x1e\n\x07message\x18\t \x01(\x0b\x32\r.demo.Message\x12\x1e\n\x07\x63ontent\x18\n \x03(\x0b\x32\r.demo.Content\x12%\n\x0emessageHistory\x18\x0b \x03(\x0b\x32\r.demo.Message2\xed\x01\n\x0c\x43ommunicator\x12/\n\rsearchContent\x12\r.demo.Message\x1a\r.demo.Content\"\x00\x12/\n\x03\x61sk\x12\x12.demo.Conversation\x1a\x12.demo.Conversation\"\x00\x12<\n\x0e\x61skStreamReply\x12\x12.demo.Conversation\x1a\x12.demo.Conversation\"\x00\x30\x01\x12=\n\raskBidiStream\x12\x12.demo.Conversation\x1a\x12.demo.Conversation\"\x00(\x01\x30\x01\x42-\n\x10io.grpc.demo.askB\x0e\x44ialogistProtoP\x01\xa2\x02\x06\x44IALOGb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x64ialogue.proto\x12\x04\x64\x65mo\"4\n\x07\x43ontent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\"?\n\x07Message\x12\n\n\x02id\x18\x04 \x01(\t\x12\x0c\n\x04text\x18\x05 \x01(\t\x12\x0c\n\x04type\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\t\"\x81\x01\n\x0c\x43onversation\x12\n\n\x02id\x18\x08 \x01(\t\x12\x1e\n\x07message\x18\t \x01(\x0b\x32\r.demo.Message\x12\x1e\n\x07\x63ontent\x18\n \x03(\x0b\x32\r.demo.Content\x12%\n\x0emessageHistory\x18\x0b \x03(\x0b\x32\r.demo.Message2\xe8\x01\n\x0c\x43ommunicator\x12/\n\rsearchContent\x12\r.demo.Message\x1a\r.demo.Content\"\x00\x12/\n\x03\x61sk\x12\x12.demo.Conversation\x1a\x12.demo.Conversation\"\x00\x12\x37\n\x0e\x61skStreamReply\x12\x12.demo.Conversation\x1a\r.demo.Message\"\x00\x30\x01\x12=\n\raskBidiStream\x12\x12.demo.Conversation\x1a\x12.demo.Conversation\"\x00(\x01\x30\x01\x42-\n\x10io.grpc.demo.askB\x0e\x44ialogistProtoP\x01\xa2\x02\x06\x44IALOGb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -29,5 +29,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_CONVERSATION']._serialized_start=144
   _globals['_CONVERSATION']._serialized_end=273
   _globals['_COMMUNICATOR']._serialized_start=276
-  _globals['_COMMUNICATOR']._serialized_end=513
+  _globals['_COMMUNICATOR']._serialized_end=508
 # @@protoc_insertion_point(module_scope)

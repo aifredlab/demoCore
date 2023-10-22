@@ -27,7 +27,7 @@ class CommunicatorStub(object):
         self.askStreamReply = channel.unary_stream(
                 '/demo.Communicator/askStreamReply',
                 request_serializer=dialogue__pb2.Conversation.SerializeToString,
-                response_deserializer=dialogue__pb2.Conversation.FromString,
+                response_deserializer=dialogue__pb2.Message.FromString,
                 )
         self.askBidiStream = channel.stream_stream(
                 '/demo.Communicator/askBidiStream',
@@ -79,7 +79,7 @@ def add_CommunicatorServicer_to_server(servicer, server):
             'askStreamReply': grpc.unary_stream_rpc_method_handler(
                     servicer.askStreamReply,
                     request_deserializer=dialogue__pb2.Conversation.FromString,
-                    response_serializer=dialogue__pb2.Conversation.SerializeToString,
+                    response_serializer=dialogue__pb2.Message.SerializeToString,
             ),
             'askBidiStream': grpc.stream_stream_rpc_method_handler(
                     servicer.askBidiStream,
@@ -143,7 +143,7 @@ class Communicator(object):
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/demo.Communicator/askStreamReply',
             dialogue__pb2.Conversation.SerializeToString,
-            dialogue__pb2.Conversation.FromString,
+            dialogue__pb2.Message.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
