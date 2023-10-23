@@ -15,7 +15,7 @@ class Asker(ask_pb2_grpc.AskerServicer):
         return ask_pb2.AskReply(**result)
 
 def serve():
-    port = os.environ.get('SERVER_PORT'),
+    port = os.environ.get('SERVER_PORT')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     ask_pb2_grpc.add_AskerServicer_to_server(Asker(), server)
     server.add_insecure_port("[::]:" + port)
