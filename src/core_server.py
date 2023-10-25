@@ -10,12 +10,10 @@ import os
 
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
-    AIMessage,
     HumanMessage,
     SystemMessage
 )
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-import asyncio
 from typing import Any
 from main import Aifred
 
@@ -25,41 +23,38 @@ class Asker(ask_pb2_grpc.AskerServicer):
         return ask_pb2.AskReply(**result)
 
 class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
+
     def searchContent(self, request, context):
         result = Aifred().searchContent(request.text)
         return dialogue_pb2.Content(**result)
 
-    def askStreamReply(self, request, context):
-        """ result = Aifred().searchContent(request.message.text)
-        message = dialogue_pb2.Message()
-        message.text = result
 
-        yield dialogue_pb2.Conversation(message=message) """
+    def askStreamReply(self
+                       , request: dialogue_pb2.Conversation
+                       , context) -> dialogue_pb2.Message:
 
-        print("### askStreamReply=", request)
+        ''' 질문에 대한 응답을 스트리밍으로 전달하는 메소드 '''
+
+        # 1. 참고 내용을 가져온다.
+        contentMsg = "" #str(doc)
+        contentList = request.content
+        if (len(contentList) > 0):
+            sorted_list = sorted(contentList, key=lambda x: x.time, reverse=True)
+            contentMsg = sorted_list[0].content
+            contentMsg = contentMsg + "\n 위 내용에 따라 아래 질문에 답변해줘"
+
+        # 2. 질문을 가져온다.
         prompt = request.message.text
 
-
-        #chat = ChatOpenAI(streaming=True, callbacks=[StreamHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
-        chat = ChatOpenAI(streaming=True, callbacks=[StreamHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
-
-        contentMsg = "" #str(doc)
-        sysMsg = contentMsg + "\n 위 내용에 따라 아래 질문에 답변해줘"
-        sys = SystemMessage(content=sysMsg)
+        # 3. GPT3를 이용해 답변을 생성한다.
+        chat = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
+        sys = SystemMessage(content=contentMsg)
         msg = HumanMessage(content=prompt)
 
-        for result in chat.astream(input='오늘 날씨는 어때요?'):
+        # 4. 답변을 전달한다.
+        for result in chat.stream([sys, msg]):
             print("### result=", result)
             yield dialogue_pb2.Message(text=result.content)
-
-
-class StreamHandler(StreamingStdOutCallbackHandler):
-    def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-        """Run on new LLM token. Only available when streaming is enabled."""
-        print("overide", token)
-        result = dialogue_pb2.Message(text=token)  
-        yield result
-        
 
 
 def serve():
