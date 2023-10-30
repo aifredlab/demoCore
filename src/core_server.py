@@ -26,13 +26,12 @@ class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
 
     def searchContent(self, request, context):
         result = Aifred().searchContent(request.text)
-        return dialogue_pb2.Content(**result)
+        return dialogue_pb2.Content(content=result)
 
 
     def askStreamReply(self
                        , request: dialogue_pb2.Conversation
                        , context) -> dialogue_pb2.Message:
-
         ''' 질문에 대한 응답을 스트리밍으로 전달하는 메소드 '''
 
         # 1. 참고 내용을 가져온다.
@@ -51,9 +50,11 @@ class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
         sys = SystemMessage(content=contentMsg)
         msg = HumanMessage(content=prompt)
 
+        print("contentMsg: ", contentMsg)
+        print("prompt: ", prompt)
+
         # 4. 답변을 전달한다.
         for result in chat.stream([sys, msg]):
-            print("### result=", result)
             yield dialogue_pb2.Message(text=result.content)
 
 
