@@ -16,16 +16,18 @@ class Content(_message.Message):
     def __init__(self, id: _Optional[str] = ..., content: _Optional[str] = ..., time: _Optional[str] = ...) -> None: ...
 
 class Message(_message.Message):
-    __slots__ = ["id", "text", "type", "time"]
+    __slots__ = ["id", "text", "type", "time", "contentId"]
     ID_FIELD_NUMBER: _ClassVar[int]
     TEXT_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     TIME_FIELD_NUMBER: _ClassVar[int]
+    CONTENTID_FIELD_NUMBER: _ClassVar[int]
     id: str
     text: str
     type: str
     time: str
-    def __init__(self, id: _Optional[str] = ..., text: _Optional[str] = ..., type: _Optional[str] = ..., time: _Optional[str] = ...) -> None: ...
+    contentId: str
+    def __init__(self, id: _Optional[str] = ..., text: _Optional[str] = ..., type: _Optional[str] = ..., time: _Optional[str] = ..., contentId: _Optional[str] = ...) -> None: ...
 
 class Conversation(_message.Message):
     __slots__ = ["id", "message", "content", "messageHistory"]
