@@ -20,7 +20,8 @@ cursor.execute('''
 ''')
 
 # 데이터 추가
-content = '''
+contents = []
+contents.append( {"content" : """
 아래 질문이 어떤 카테고리에 속하는지 알려줘
 
 1. 보험 가입 가능 확인
@@ -31,8 +32,21 @@ content = '''
 설명하지 않고 답변만 해줘
 
 질문 : {0}
-'''
-cursor.execute("INSERT INTO PROMPT_TEMPLATE (type, content) VALUES (?, ?)", ("CATEGORY", content))
+""", "type" : "CATEGORY_01"})
+
+
+contents.append( {"content" : """
+내용을 기반으로 질문에 답변하기 위해 필요한 질문이 있어? 질문이 있다면 [질문] 항목으로 답변해줘
+
+질문 : {0}
+
+내용 : {1}
+""", "type" : "CONFIRM_QUESTION_01"})
+
+
+for content in contents:
+    cursor.execute("INSERT INTO PROMPT_TEMPLATE (type, content) VALUES (?, ?)", (content['type'], content['content']))
+
 conn.commit()
 
 # 데이터 조회
@@ -43,12 +57,12 @@ for row in rows:
     print(row)
 
 # 데이터 수정
-cursor.execute("UPDATE PROMPT_TEMPLATE SET type = ? WHERE content = ?", ("new_email@example.com", "alice"))
-conn.commit()
-
-# 데이터 삭제
-cursor.execute("DELETE FROM PROMPT_TEMPLATE WHERE content = ?", ("bob",))
-conn.commit()
+# cursor.execute("UPDATE PROMPT_TEMPLATE SET type = ? WHERE content = ?", ("new_email@example.com", "alice"))
+# conn.commit()
+# 
+# # 데이터 삭제
+# cursor.execute("DELETE FROM PROMPT_TEMPLATE WHERE content = ?", ("bob",))
+# conn.commit()
 
 # 연결 종료
 cursor.close()
