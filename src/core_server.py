@@ -38,6 +38,7 @@ class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
         contentMsg = "" #str(doc)
         contentList = request.content
         if (len(contentList) > 0):
+            # 시간으로 내림차순 정렬하고 1번째 항목을 가져온다.
             sorted_list = sorted(contentList, key=lambda x: x.time, reverse=True)
             contentMsg = sorted_list[0].content
             contentMsg = contentMsg + "\n 위 내용에 따라 아래 질문에 답변해줘"
