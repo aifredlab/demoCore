@@ -38,7 +38,7 @@ class TemplateMaker:
         # PromptTemplate 조회
         obj = self.getTemplate(typeCd)
         pt = obj[0][2]
-        print("pt : ", pt)
+        # print("pt : ", pt)
 
         # 조회한 template에 입력된 값을 셋팅하여 반환한다.
         templateText = pt.format(*params)
