@@ -43,7 +43,7 @@ message Content {
 message Message {
     string id = 4;
     string text = 5; // 내용
-    string type = 6; // 메세지 구분 (1: 사용자의 질문, ) 
+    string type = 6; // 메세지 구분 (1: 사용자의 질문, 2: 시스템의 답변, 3: 시스템의 질문, 4: 사용자의 답변) 
     string time = 7; // yyyyMMddHHmmss format
     string contentId = 8;
 }
