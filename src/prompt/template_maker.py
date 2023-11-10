@@ -66,6 +66,6 @@ class TemplateMaker:
 
 
 # 사용예제
-template = TemplateMaker()
-print (template.makeTemplateText('CATEGORY_01',['이번에 삼성화재의 실손 보험을 가입하려고 하는데 가능한지 확인해줘 ']))
-print (template.get_format_args_count('{0} {1} {2}'))
+# template = TemplateMaker()
+# print (template.makeTemplateText('CATEGORY_01',['이번에 삼성화재의 실손 보험을 가입하려고 하는데 가능한지 확인해줘 ']))
+# print (template.get_format_args_count('{0} {1} {2}'))

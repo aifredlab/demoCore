@@ -11,11 +11,13 @@ import os
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     HumanMessage,
-    SystemMessage
+    SystemMessage,
+    prompt
 )
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from typing import Any
 from main import Aifred
+from prompt.template_maker import TemplateMaker
 
 class Asker(ask_pb2_grpc.AskerServicer):
     def Ask(self, request, context):
@@ -34,6 +36,8 @@ class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
                        , context) -> dialogue_pb2.Message:
         ''' 질문에 대한 응답을 스트리밍으로 전달하는 메소드 '''
 
+        print("request : ", request)
+
         # 1. 참고 내용을 가져온다.
         contentMsg = "" #str(doc)
         contentList = request.content
@@ -41,22 +45,73 @@ class Communicator(dialogue_pb2_grpc.CommunicatorServicer):
             # 시간으로 내림차순 정렬하고 1번째 항목을 가져온다.
             sorted_list = sorted(contentList, key=lambda x: x.time, reverse=True)
             contentMsg = sorted_list[0].content
-            contentMsg = contentMsg + "\n 위 내용에 따라 아래 질문에 답변해줘"
 
         # 2. 질문을 가져온다.
         prompt = request.message.text
 
-        # 3. GPT3를 이용해 답변을 생성한다.
-        chat = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
-        sys = SystemMessage(content=contentMsg)
-        msg = HumanMessage(content=prompt)
+        # 사용자에게 전달할 결과(Iterator)
+        resultIter = None
 
-        print("contentMsg: ", contentMsg)
-        print("prompt: ", prompt)
+        # type에 따른 분기처리
+        #   (1: 사용자의 질문, 2: 시스템의 답변, 3: 시스템의 질문, 4: 사용자의 답변 )
+        if "1" == request.message.type:
+            chat_result = None
+            # 질문에 대한 추가적인 정보가 필요한지 확인한다.
+            if len(contentList) > 0:
+                prompt = TemplateMaker.makeTemplateText('CONFIRM_QUESTION_01', [contentMsg, prompt])
 
-        # 4. 답변을 전달한다.
-        for result in chat.stream([sys, msg]):
-            yield dialogue_pb2.Message(text=result.content)
+                chat = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0.9)
+                sys = SystemMessage(content="")
+                msg = HumanMessage(content=prompt)
+                chat_result = chat([sys, msg])
+            
+            # 추가적인 정보가 필요하다면 -> 추가적인 정보를 요청한다.
+            if chat_result is not None and "no message" not in chat_result.content:
+                for char in iter(chat_result.content):
+                    yield dialogue_pb2.Message(text=char, type="3")
+
+            # 추가적인 정보가 필요없다면 -> 답변을 생성한다.
+            else:
+                prompt = TemplateMaker.makeTemplateText('ANSWER_02', [contentMsg, prompt])
+
+                chat = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
+                sys = SystemMessage(content="")
+                msg = HumanMessage(content=prompt)
+                resultIter = chat.stream([sys, msg])
+
+        elif "2" == request.message.type:
+            pass
+        elif "3" == request.message.type:
+            pass
+        elif "4" == request.message.type:
+            question = ""
+            # 시간으로 내림차순 정렬하고 - type이 1인 첫번째 항목을 가져온다.
+            if len(request.messageHistory) > 0:
+                sorted_list = sorted(request.messageHistory, key=lambda x: x.time, reverse=True)
+                for msg in sorted_list:
+                    if "1" == msg.type:
+                        question = msg.text
+                        break
+
+            # contentMsg=약관, question=질문(이전질문), prompt=참고사항(사용자의 답변)
+            prompt = TemplateMaker.makeTemplateText('ANSWER_01', [contentMsg, question, prompt])
+
+            chat = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
+            sys = SystemMessage(content="")
+            msg = HumanMessage(content=prompt)
+            resultIter = chat.stream([sys, msg])
+            pass
+        else:
+            chat = ChatOpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], model_name='gpt-3.5-turbo', temperature=0.9)
+            sys = SystemMessage(content=contentMsg)
+            msg = HumanMessage(content=prompt)
+            resultIter = chat.stream([sys, msg])
+            pass
+
+        # 답변을 전달한다.
+        for result in resultIter:
+            yield dialogue_pb2.Message(text=result.content, type="2")
+
 
 
 def serve():
